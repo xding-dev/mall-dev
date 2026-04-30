@@ -1,0 +1,21 @@
+# 后端启动端口，保持和前端配置一致
+server:
+  port: 8080
+
+spring:
+  # 数据库核心配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # 这里的seckill是你之前新建的数据库名，必须提前在MySQL里建好
+    url: jdbc:mysql://localhost:3306/seckill?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false
+    username: root
+    password: 1234
+
+# MyBatis-Plus配置
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true  # 下划线转驼峰
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  # 控制台打印SQL，方便调试
+
+

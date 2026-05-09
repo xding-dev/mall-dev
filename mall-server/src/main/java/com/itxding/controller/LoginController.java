@@ -1,9 +1,13 @@
 package com.itxding.controller;
 
-import com.itxding.dto.User;
-import com.itxding.entity.LoginDto;
+import com.itxding.entity.PageParam;
+import com.itxding.entity.UmsAdmin;
+import com.itxding.entity.User;
+import com.itxding.dto.LoginDto;
+import com.itxding.result.CommonPage;
 import com.itxding.result.Result;
 import com.itxding.service.UserService;
+import com.itxding.service.AdminService;
 import com.itxding.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +18,9 @@ public class LoginController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private AdminService adminService;
 
     /**
      * 登录接口：前端唯一对接的登录入口
@@ -59,5 +66,13 @@ public class LoginController {
         // 可选：如果后续要做Redis黑名单，这里可以把Token加入黑名单
         // 目前JWT无状态场景，后端无需额外操作，直接返回成功即可
         return Result.success();
+    }
+
+    /**
+     * 分页获取用户列表（完全匹配前端接口）
+     */
+    @GetMapping("/list")
+    public Result<CommonPage<UmsAdmin>> getAdminList(PageParam pageParam) {
+        return Result.success(CommonPage.restPage(adminService.getAdminList(pageParam)));
     }
 }

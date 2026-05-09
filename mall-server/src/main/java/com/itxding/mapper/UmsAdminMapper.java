@@ -1,10 +1,10 @@
 package com.itxding.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.itxding.entity.User;
+import com.itxding.entity.UmsAdmin;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface UserMapper extends BaseMapper<User> {
+public interface UmsAdminMapper extends BaseMapper<UmsAdmin> {
 
 }

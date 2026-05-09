@@ -1,7 +1,7 @@
 package com.itxding.service;
 
-import com.itxding.dto.User;
-import com.itxding.entity.LoginDto;
+import com.itxding.entity.User;
+import com.itxding.dto.LoginDto;
 
 public interface UserService {
     /**

@@ -1,8 +1,8 @@
 package com.itxding.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.itxding.dto.User;
-import com.itxding.entity.LoginDto;
+import com.itxding.entity.User;
+import com.itxding.dto.LoginDto;
 import com.itxding.exceltion.BusinessException;
 import com.itxding.mapper.UserMapper;
 import com.itxding.service.UserService;

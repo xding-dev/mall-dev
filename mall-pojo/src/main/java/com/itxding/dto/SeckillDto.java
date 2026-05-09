@@ -1,4 +1,4 @@
-package com.itxding.entity;
+package com.itxding.dto;
 
 import lombok.Data;
 

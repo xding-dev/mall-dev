@@ -1,6 +1,6 @@
 package com.itxding.controller;
 
-import com.itxding.dto.ProductPublishStatusParamDTO;
+import com.itxding.dto.ProductPublishStatusDTO;
 import com.itxding.dto.ProductQueryDto;
 import com.itxding.entity.PmsProduct;
 import com.itxding.result.CommonPage;
@@ -36,7 +36,7 @@ public class ProductController {
      * @return
      */
     @PostMapping("/update/publishStatus")
-    public Result productUpdatePublishStatus(@RequestBody ProductPublishStatusParamDTO paramDTO){
+    public Result productUpdatePublishStatus(@RequestBody ProductPublishStatusDTO paramDTO){
         log.info("批量上下架商品：{}",paramDTO);
         productService.productUpdatePublishStatus(paramDTO);
         return Result.success();

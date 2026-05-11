@@ -1,6 +1,6 @@
 package com.itxding.service;
 
-import com.itxding.dto.ProductPublishStatusParamDTO;
+import com.itxding.dto.ProductPublishStatusDTO;
 import com.itxding.dto.ProductQueryDto;
 import com.itxding.entity.PmsProduct;
 import com.itxding.result.CommonPage;
@@ -18,7 +18,7 @@ public interface ProductService {
      * 批量上下架商品
      * @param paramDTO
      */
-    void productUpdatePublishStatus(ProductPublishStatusParamDTO paramDTO);
+    void productUpdatePublishStatus(ProductPublishStatusDTO paramDTO);
 
 
 }

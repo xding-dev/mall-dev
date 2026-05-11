@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.itxding.dto.ProductPublishStatusParamDTO;
+import com.itxding.dto.ProductPublishStatusDTO;
 import com.itxding.dto.ProductQueryDto;
 import com.itxding.entity.PmsProduct;
 import com.itxding.mapper.ProductMapper;
@@ -55,7 +55,7 @@ public class ProductServiceImpl implements ProductService {
      * 批量上下架商品
      * @param paramDTO
      */
-    public void productUpdatePublishStatus(ProductPublishStatusParamDTO paramDTO) {
+    public void productUpdatePublishStatus(ProductPublishStatusDTO paramDTO) {
        //1.1参数校验
         if(paramDTO == null
         || !StringUtils.hasText(paramDTO.getIds())

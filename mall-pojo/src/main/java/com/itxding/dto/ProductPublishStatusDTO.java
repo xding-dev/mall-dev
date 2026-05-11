@@ -7,7 +7,7 @@ import lombok.Data;
  *
  */
 @Data
-public class ProductPublishStatusParamDTO {
+public class ProductPublishStatusDTO {
     /**
      * 商品ID列表（逗号分隔的字符串，如 "1,2,3"）
      */

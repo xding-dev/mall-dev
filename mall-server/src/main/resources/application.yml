@@ -23,4 +23,12 @@ mybatis-plus:
     map-underscore-to-camel-case: true  # 下划线转驼峰
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  # 控制台打印SQL，方便调试
 
+logging:
+  level:
+    com:
+      sky:
+        mapper: debug
+        service: info
+        controller: info
+
 

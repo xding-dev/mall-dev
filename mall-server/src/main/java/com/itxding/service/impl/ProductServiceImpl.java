@@ -3,9 +3,12 @@ package com.itxding.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.itxding.dto.ProductNewStatusDTO;
 import com.itxding.dto.ProductPublishStatusDTO;
 import com.itxding.dto.ProductQueryDto;
+import com.itxding.dto.ProductRecommendStatusDTO;
 import com.itxding.entity.PmsProduct;
 import com.itxding.mapper.ProductMapper;
 import com.itxding.result.CommonPage;
@@ -56,7 +59,7 @@ public class ProductServiceImpl implements ProductService {
      * @param paramDTO
      */
     public void productUpdatePublishStatus(ProductPublishStatusDTO paramDTO) {
-       //1.1参数校验
+      /* //1.1参数校验
         if(paramDTO == null
         || !StringUtils.hasText(paramDTO.getIds())
         || paramDTO.getPublishStatus() == null){
@@ -85,8 +88,60 @@ public class ProductServiceImpl implements ProductService {
                 // 条件：ID在传入的列表中
                 .in(PmsProduct::getId, productIds);
         // 执行更新（null表示不更新实体本身，只按条件更新）
-        productMapper.update(null, updateWrapper);
+        productMapper.update(null, updateWrapper);*/
+
+        // 传入：ids、状态、要更新的字段（上架状态）
+        updateCommonStatus(paramDTO.getIds(), paramDTO.getPublishStatus(), PmsProduct::getStatus);
+    }
+
+    /**
+     * 批量推荐商品
+     * @param paramDTO
+     */
+    public void productUpdateRecommend(ProductRecommendStatusDTO paramDTO) {
+        // 传入：ids、状态、要更新的字段（推荐状态）
+        updateCommonStatus(paramDTO.getIds(), paramDTO.getRecommendStatus(), PmsProduct::getRecommendStatus);
+    }
+
+    @Override
+    public void productUpdateNew(ProductNewStatusDTO paramDTO) {
+        // 传入：ids、状态、要更新的字段（新品状态）
+        updateCommonStatus(paramDTO.getIds(), paramDTO.getNewStatus(), PmsProduct::getNewStatus);
+    }
 
 
+
+
+
+
+
+
+    // ====================== 【核心】公共通用方法：所有批量状态更新都用它 ======================
+    /**
+     * 通用批量更新商品状态方法
+     * @param ids 商品ID字符串(1,2,3)
+     * @param status 要更新的状态值(0/1)
+     * @param statusField 要更新的实体字段（Lambda方式指定）
+     */
+    private void updateCommonStatus(String ids, Integer status, SFunction<PmsProduct, ?> statusField) {
+        // 1. 统一参数校验
+        if (!StringUtils.hasText(ids) || status == null) {
+            throw new RuntimeException("参数不能为空");
+        }
+        if (status != 0 && status != 1) {
+            throw new RuntimeException("状态值只能为 0 或 1");
+        }
+
+        // 2. 统一分割ID
+        List<Long> productIds = Arrays.stream(ids.split(","))
+                .filter(StringUtils::hasText)
+                .map(Long::parseLong)
+                .collect(Collectors.toList());
+
+        // 3. 统一批量更新
+        LambdaUpdateWrapper<PmsProduct> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.set(statusField, status)    // 动态设置要更新的字段
+                .in(PmsProduct::getId, productIds);
+        productMapper.update(null, wrapper);
     }
 }

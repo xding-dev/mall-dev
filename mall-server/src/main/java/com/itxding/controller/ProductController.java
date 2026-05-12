@@ -1,7 +1,9 @@
 package com.itxding.controller;
 
+import com.itxding.dto.ProductNewStatusDTO;
 import com.itxding.dto.ProductPublishStatusDTO;
 import com.itxding.dto.ProductQueryDto;
+import com.itxding.dto.ProductRecommendStatusDTO;
 import com.itxding.entity.PmsProduct;
 import com.itxding.result.CommonPage;
 import com.itxding.result.Result;
@@ -41,4 +43,29 @@ public class ProductController {
         productService.productUpdatePublishStatus(paramDTO);
         return Result.success();
     }
+
+    /**
+     * 批量推荐商品
+     * @param paramDTO
+     * @return
+     */
+    @PostMapping("/update/recommendStatus")
+    public Result productUpdateRecommendStatus(@RequestBody ProductRecommendStatusDTO paramDTO){
+        log.info("批量推荐商品：{}",paramDTO);
+        productService.productUpdateRecommend(paramDTO);
+        return Result.success();
+    }
+
+    /**
+     * 批量设为新品
+     * @param paramDTO
+     * @return
+     */
+    @PostMapping("update/newStatus")
+    public Result productUpdateNewStatus( ProductNewStatusDTO paramDTO){
+        log.info("批量设为新品：{}",paramDTO);
+        productService.productUpdateNew(paramDTO);
+        return Result.success();
+    }
+
 }

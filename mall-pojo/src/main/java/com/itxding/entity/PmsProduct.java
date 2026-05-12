@@ -61,4 +61,10 @@ public class PmsProduct {
 
     // 更新时间
     private LocalDateTime updateTime;
+
+    // 推荐状态 0-不推荐，1-是推荐
+    private Integer recommendStatus;
+
+    // 新品状态：0-不是新品，1-是新品
+    private Integer newStatus;
 }

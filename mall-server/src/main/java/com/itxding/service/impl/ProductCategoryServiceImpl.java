@@ -1,12 +1,17 @@
 package com.itxding.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.itxding.entity.PageParam;
 import com.itxding.entity.PmsCategory;
 import com.itxding.entity.PmsProductCategoryExt;
 import com.itxding.mapper.ProductCategoryMapper;
+import com.itxding.result.CommonPage;
 import com.itxding.service.ProductCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -57,6 +62,8 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 
         return rootList;
     }
+
+
     /**
      * 递归获取子分类（核心方法）
      * @param parentId 父分类ID
@@ -74,5 +81,32 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
             child.setChildren(getChildren(child.getId(), allList));
         }
         return children;
+    }
+
+
+
+
+    /**
+     * 分页查询商品分类
+     * @param parentId
+     * @param pageParam
+     * @return
+     */
+    public CommonPage<PmsCategory> getProductCategoryList(Long parentId, PageParam pageParam) {
+        //1.构建分页对象
+        Page<PmsCategory> page = new Page<>(pageParam.getPageNum(), pageParam.getPageSize());
+        //2.构建分页查询条件
+        LambdaQueryWrapper<PmsCategory> wrapper = new LambdaQueryWrapper<>();
+        // 按父ID筛选
+        wrapper.eq(PmsCategory::getParentId, parentId)
+                // 按分类名称模糊查询（keyword不为空时生效）
+                .like(StringUtils.hasText(pageParam.getKeyword()), PmsCategory::getName, pageParam.getKeyword())
+                // 按排序字段升序排列
+                .orderByAsc(PmsCategory::getSort);
+        //3.分页查询
+        IPage<PmsCategory> categoryIPage = productCategoryMapper.selectPage(page, wrapper);
+
+        //4.转换为通用分页结果
+        return CommonPage.restPage(categoryIPage);
     }
 }

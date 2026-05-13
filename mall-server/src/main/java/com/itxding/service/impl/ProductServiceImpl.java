@@ -5,10 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.itxding.dto.ProductNewStatusDTO;
-import com.itxding.dto.ProductPublishStatusDTO;
-import com.itxding.dto.ProductQueryDto;
-import com.itxding.dto.ProductRecommendStatusDTO;
+import com.itxding.dto.*;
 import com.itxding.entity.PmsProduct;
 import com.itxding.mapper.ProductMapper;
 import com.itxding.result.CommonPage;
@@ -103,10 +100,23 @@ public class ProductServiceImpl implements ProductService {
         updateCommonStatus(paramDTO.getIds(), paramDTO.getRecommendStatus(), PmsProduct::getRecommendStatus);
     }
 
-    @Override
+
+    /**
+     * 批量设为新品
+     * @param paramDTO
+     */
     public void productUpdateNew(ProductNewStatusDTO paramDTO) {
         // 传入：ids、状态、要更新的字段（新品状态）
         updateCommonStatus(paramDTO.getIds(), paramDTO.getNewStatus(), PmsProduct::getNewStatus);
+    }
+
+    /**
+     * 批量删除商品
+     * @param param
+     */
+    public void updateDeleteStatus(ProductDeleteStatusParamDTO param) {
+        // 调用公共方法，传入要更新的字段：isDeleted
+        updateCommonStatus(param.getIds(), param.getDeleteStatus(), PmsProduct::getDeleteStatus);
     }
 
 

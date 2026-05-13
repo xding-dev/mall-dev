@@ -1,9 +1,6 @@
 package com.itxding.controller;
 
-import com.itxding.dto.ProductNewStatusDTO;
-import com.itxding.dto.ProductPublishStatusDTO;
-import com.itxding.dto.ProductQueryDto;
-import com.itxding.dto.ProductRecommendStatusDTO;
+import com.itxding.dto.*;
 import com.itxding.entity.PmsProduct;
 import com.itxding.result.CommonPage;
 import com.itxding.result.Result;
@@ -65,6 +62,18 @@ public class ProductController {
     public Result productUpdateNewStatus( ProductNewStatusDTO paramDTO){
         log.info("批量设为新品：{}",paramDTO);
         productService.productUpdateNew(paramDTO);
+        return Result.success();
+    }
+
+
+    /**
+     * 批量删除商品
+     * @param paramDTO
+     * @return
+     */
+    @PostMapping("/update/deleteStatus")
+    public Result<Void> updateDeleteStatus(ProductDeleteStatusParamDTO paramDTO) {
+        productService.updateDeleteStatus(paramDTO);
         return Result.success();
     }
 

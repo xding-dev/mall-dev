@@ -1,9 +1,6 @@
 package com.itxding.service;
 
-import com.itxding.dto.ProductNewStatusDTO;
-import com.itxding.dto.ProductPublishStatusDTO;
-import com.itxding.dto.ProductQueryDto;
-import com.itxding.dto.ProductRecommendStatusDTO;
+import com.itxding.dto.*;
 import com.itxding.entity.PmsProduct;
 import com.itxding.result.CommonPage;
 
@@ -34,4 +31,10 @@ public interface ProductService {
      * @param paramDTO
      */
     void productUpdateNew(ProductNewStatusDTO paramDTO);
+
+    /**
+     * 批量修改删除状态
+     * @param paramDTO
+     */
+    void updateDeleteStatus(ProductDeleteStatusParamDTO paramDTO);
 }
